@@ -1,9 +1,11 @@
 class ClubsController < ApplicationController
   before_action :set_club, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
 
   # GET /clubs or /clubs.json
   def index
     @clubs = Club.all
+    @user_clubs = current_user.clubs
   end
 
   # GET /clubs/1 or /clubs/1.json
@@ -25,6 +27,7 @@ class ClubsController < ApplicationController
 
     respond_to do |format|
       if @club.save
+        current_user.clubs << @club
         format.html { redirect_to club_url(@club), notice: "Club was successfully created." }
         format.json { render :show, status: :created, location: @club }
       else
@@ -66,5 +69,6 @@ class ClubsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def club_params
       params.fetch(:club, {})
+      params.require(:club).permit(:name, :user_id => [])
     end
 end

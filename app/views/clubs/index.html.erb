@@ -3,14 +3,21 @@
 <% content_for :title, "Clubs" %>
 
 <h1>Clubs</h1>
-
 <div id="clubs">
-  <% @clubs.each do |club| %>
+<% if @user_clubs.present? %>
+  <% @user_clubs.each do |club| %>
     <%= render club %>
     <p>
+      <%= club.name %>
       <%= link_to "Show this club", club %>
     </p>
   <% end %>
+<% else %>
+  NO clubs yet!<br />
+  Create a club:
+<% end %>
+<%= @user_clubs %>
 </div>
 
-<%= link_to "New club", new_club_path %>
+<%= link_to "New club", new_club_path %><br />
+<%= link_to "Home", root_path %>
