@@ -4,8 +4,18 @@
 
 <div>
   <%= @club.name %>
-  <%= link_to "Edit this club", edit_club_path(@club) %> |
-  <%= link_to "Back to clubs", clubs_path %>
-
-  <%= button_to "Destroy this club", @club, method: :delete %>
+  <%= render partial: "custom_button", locals: {title: "Edit this club", path: edit_club_path(@club)}%> |
+  <%= render partial: "custom_button", locals: {title: "Back to clubs", path: clubs_path}%>
+</div>
+<div>
+  Members:<br />
+  <% @club.users.each do |user| %>
+    <%= user.first_name %>
+  <% end %>
+</div>
+<div class='container mx-auto'>
+  <h1 class='text-3xl bold'><%= @club.name %></h1>
+</div>
+<div class='container mx-auto'>
+  <%= render partial: "custom_button", locals: {title: "Invite people", path: club_invite_form_path(@club), club: @club }%>
 </div>

@@ -60,6 +60,26 @@ class ClubsController < ApplicationController
     end
   end
 
+  # POST /clubs/:id/invite
+  def invite
+    @club = Club.find(params[:id])
+    invitee = User.find_by(email: params[:email])
+
+    if invitee
+      # Create an invitation or directly add the user to the club
+      invitation = Invitation.create!(inviter: current_user, invitee: invitee, club: @club)
+      # Optionally: If you don't want to track invitations, directly add the user
+      # @club.users << invitee
+      
+      # Send the invitation email
+      UserMailer.club_invitation(invitation).deliver_now
+
+      redirect_to club_path, notice: "#{invitee.email} has been invited."
+    else
+      redirect_to club_invite_form_path, alert: "User with that email does not exist."
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_club
@@ -70,5 +90,10 @@ class ClubsController < ApplicationController
     def club_params
       params.fetch(:club, {})
       params.require(:club).permit(:name, :user_id => [])
+    end
+    def require_login
+      unless current_user
+        redirect_to new_user_session_path
+      end
     end
 end

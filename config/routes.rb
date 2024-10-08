@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :roles
   resources :clubs
   devise_for :users
-  root "home#index"
+  root "clubs#index"
 
   # delete user
   devise_scope :user do
@@ -13,6 +13,18 @@ Rails.application.routes.draw do
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
+
+  # config/routes.rb
+  resources :clubs do
+    post 'invite', on: :member   # Route for inviting users
+  end
+
+  resources :invitations, only: [:index] do
+    member do
+      post 'accept'   # Route for accepting an invite
+    end
+  end
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -26,4 +38,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  get "/clubs/:id/invite_form" => "clubs#invite_form", as: :club_invite_form
 end

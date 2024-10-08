@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_03_205606) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_08_171128) do
   create_table "clubs", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -22,6 +22,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_03_205606) do
     t.integer "user_id", null: false
     t.index ["club_id"], name: "index_clubs_users_on_club_id"
     t.index ["user_id"], name: "index_clubs_users_on_user_id"
+  end
+
+  create_table "invitations", force: :cascade do |t|
+    t.integer "inviter_id"
+    t.integer "invitee_id"
+    t.integer "club_id"
+    t.boolean "accepted"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "roles", force: :cascade do |t|

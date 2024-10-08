@@ -1,0 +1,6 @@
+<p>Hello <%= @invitee.email %>,</p>
+
+<p>You have been invited by <%= @inviter.email %> to join the club "<%= @club.name %>".</p>
+
+<p>Click the link below to accept the invitation:</p>
+<%= link_to 'Accept Invitation', accept_invitation_url(@invitation) %>

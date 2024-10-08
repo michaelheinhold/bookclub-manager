@@ -1,0 +1,8 @@
+<%= form_with url: invite_club_path(model: @club), method: :post do |form| %>
+  <%= form.label :email, "Invite User by Email" %>
+  <%= form.email_field :email %>
+  <%= form.submit "Send Invite" %>
+<% end %>
+
+<%= link_to "Show this club", club_path %> |
+<%= link_to "Back to clubs", clubs_path %>
