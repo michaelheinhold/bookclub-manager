@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-  default from: 'no-reply@bookclub-manager.com' # Change to your preferred sender email
+  default from: 'michael.heinhold@gmail.com' # Change to your preferred sender email
 
   def club_invitation(invitation)
     @invitation = invitation

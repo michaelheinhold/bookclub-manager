@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   resources :invitations, only: [:index] do
     member do
+      get 'accept'
       post 'accept'   # Route for accepting an invite
     end
   end

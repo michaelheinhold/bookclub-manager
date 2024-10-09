@@ -7,10 +7,11 @@ class InvitationsController < ApplicationController
       # Add the user to the club
       invitation.club.users << current_user
       invitation.update(accepted: true)
+      invitation.destroy
 
-      redirect_to clubs_path, notice: "You have joined #{invitation.club.name}."
+      redirect_to invitation.club, notice: "You have joined #{invitation.club.name}."
     else
-      redirect_to clubs_path, alert: "You are not authorized to accept this invitation."
+      redirect_to root_path, alert: "You are not authorized to accept this invitation."
     end
   end
 end
